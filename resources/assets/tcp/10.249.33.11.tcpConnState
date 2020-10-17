@@ -1,0 +1,6 @@
+TCP-MIB::tcpConnState.0.0.0.0.22.0.0.0.0.0 INTEGER: listen(2)
+TCP-MIB::tcpConnState.0.0.0.0.80.0.0.0.0.0 INTEGER: listen(2)
+TCP-MIB::tcpConnState.10.249.33.11.22.10.249.34.12.36152 INTEGER: established(5)
+TCP-MIB::tcpConnState.10.249.33.11.22.10.249.34.12.36160 INTEGER: established(5)
+TCP-MIB::tcpConnState.127.0.0.1.25.0.0.0.0.0 INTEGER: listen(2)
+TCP-MIB::tcpConnState.127.0.0.1.199.0.0.0.0.0 INTEGER: listen(2)
