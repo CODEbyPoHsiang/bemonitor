@@ -71,3 +71,4 @@ Route::get("event_search/{ip}", 'LeventController@search_data');
 /********************************************************************************/
 /**** TelegramSendController (table:l_event) */
 Route::post("telegram_send", 'TelegramSendController@alert_message');
+Route::post('ping', 'BmonitorController@getPING');

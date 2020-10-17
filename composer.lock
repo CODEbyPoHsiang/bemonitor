@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a4651a6d390c3763b1b9a6527787529",
+    "content-hash": "57016ad297b234412c99a4d08ad641dc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -117,6 +117,58 @@
                 }
             ],
             "time": "2020-08-18T23:57:15+00:00"
+        },
+        {
+            "name": "codebypohsiang/apenbhdping",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CODEbyPoHsiang/apenbhdping.git",
+                "reference": "fcd733a8d13c62a76152ede431196afee043190b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CODEbyPoHsiang/apenbhdping/zipball/fcd733a8d13c62a76152ede431196afee043190b",
+                "reference": "fcd733a8d13c62a76152ede431196afee043190b",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~7.2",
+                "illuminate/support": "^5.1 || ^5.7 || ^5.8 || ^6.0 || ^7.0|| ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Karlmonson\\Ping\\PingServiceProvider"
+                    ],
+                    "aliases": {
+                        "Ping": "Karlmonson\\Ping\\Facades\\Ping"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Karlmonson\\Ping\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CODEbyPoHsiang",
+                    "email": "0939cool@gmail.com"
+                }
+            ],
+            "description": "apenbhdping",
+            "support": {
+                "issues": "https://github.com/CODEbyPoHsiang/apenbhdping/issues",
+                "source": "https://github.com/CODEbyPoHsiang/apenbhdping/tree/main"
+            },
+            "time": "2020-10-17T16:37:05+00:00"
         },
         {
             "name": "codebypohsiang/apenbhdsnmp",
@@ -5470,25 +5522,25 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.7.3",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "5d5fe9bb3d656b514d455645b3addc5f7ba7714d"
+                "reference": "fa50d9db1c0c2fae99cf988d27023effda5524a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/5d5fe9bb3d656b514d455645b3addc5f7ba7714d",
-                "reference": "5d5fe9bb3d656b514d455645b3addc5f7ba7714d",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/fa50d9db1c0c2fae99cf988d27023effda5524a3",
+                "reference": "fa50d9db1c0c2fae99cf988d27023effda5524a3",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0",
+                "php": "^5.5.9 || ^7.0 || ^8.0",
                 "psr/log": "^1.0.1"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9 || ^1.0",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.3",
                 "symfony/var-dumper": "^2.6 || ^3.0 || ^4.0 || ^5.0"
             },
             "suggest": {
@@ -5498,7 +5550,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -5529,9 +5581,9 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.7.3"
+                "source": "https://github.com/filp/whoops/tree/2.8.0"
             },
-            "time": "2020-06-14T09:00:00+00:00"
+            "time": "2020-10-17T09:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -7763,6 +7815,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "codebypohsiang/apenbhdping": 20,
         "codebypohsiang/apenbhdsnmp": 20
     },
     "prefer-stable": true,

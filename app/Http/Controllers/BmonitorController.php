@@ -14,14 +14,16 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+header("content-type:text/html;charset=utf-8");
+
 class BmonitorController extends Controller
 {
     //自訂義分頁function
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public function pagination($items, $perPage = 2, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
@@ -30,56 +32,56 @@ class BmonitorController extends Controller
     }
 
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     //清單列表 api
     public function index()
     {
         // $bmonitor = Bmonitor::all()->toArray();
         // $bmonitor = Bmonitor::where("is_delete",'=',"1")->orderBy('create_time', 'desc')->get()->toArray();
         $bmonitor = Bmonitor::where("is_delete", '=', "1")->cursor()->toArray();
-        $bmonitor_new=[];
-        foreach ($bmonitor as $key=>$arr) {
+        $bmonitor_new = [];
+        foreach ($bmonitor as $key => $arr) {
             // 將要變更的欄位的value值用"if else"寫出每個可能
             // $type為自定義想要的字串內容
-            if ($arr["os"]=="l") {
-                $type="Linux";
+            if ($arr["os"] == "l") {
+                $type = "Linux";
             }
-            if ($arr["os"]=="w") {
-                $type="Windows";
+            if ($arr["os"] == "w") {
+                $type = "Windows";
             }
             //超過閥值，定義的欄位，true超過，false未超過
-            if ($arr['v_value']>=$arr['v_threshold']) {
+            if ($arr['v_value'] >= $arr['v_threshold']) {
                 $v_isOver = true;
             } else {
-                $v_isOver= false;
+                $v_isOver = false;
             }
-            if ($arr['w_value']>=$arr['w_threshold']) {
-                $w_isOver= true;
+            if ($arr['w_value'] >= $arr['w_threshold']) {
+                $w_isOver = true;
             } else {
-                $w_isOver=false;
+                $w_isOver = false;
             }
-            if ($arr['y_value']>=$arr['y_threshold']) {
-                $y_isOver= true;
+            if ($arr['y_value'] >= $arr['y_threshold']) {
+                $y_isOver = true;
             } else {
-                $y_isOver=false;
+                $y_isOver = false;
             }
-            
+
             // 將自定義字串先組成陣列(1)
-            $bmomitor_os=['os_name'=>$type];
+            $bmomitor_os = ['os_name' => $type];
             // 將閥值組成陣列(2)
             $bmomitor_isOver = [
-                "v_isOver"=>$v_isOver,
-                "w_isOver"=>$w_isOver,
-                "y_isOver"=>$y_isOver,
+                "v_isOver" => $v_isOver,
+                "w_isOver" => $w_isOver,
+                "y_isOver" => $y_isOver,
             ];
             // 將其餘的值用$key = $val方式組成陣列(3)
-            $bmonitor[$key]=$arr;
-            
+            $bmonitor[$key] = $arr;
+
             //將自定義陣列跟其餘值的陣列合併
-            $bmonitor_new[]= array_merge($bmomitor_os, $bmonitor[$key], $bmomitor_isOver);
+            $bmonitor_new[] = array_merge($bmomitor_os, $bmonitor[$key], $bmomitor_isOver);
         }
         // dd($bmomitor_r);
         if (empty($bmonitor_new)) {
@@ -104,24 +106,24 @@ class BmonitorController extends Controller
     {
         $bmonitor = Bmonitor::where("is_delete", '=', "1")->get()->toArray();
         // dd($bmonitor);
-        $bmonitor_new=[];
-        foreach ($bmonitor as $key=>$arr) {
-            if ($arr["os"]=="l") {
-                $type="Linux";
+        $bmonitor_new = [];
+        foreach ($bmonitor as $key => $arr) {
+            if ($arr["os"] == "l") {
+                $type = "Linux";
             }
-            if ($arr["os"]=="w") {
-                $type="Windows";
+            if ($arr["os"] == "w") {
+                $type = "Windows";
             }
-            $bmomitor_os=['os_name'=>$type];
-            $bmonitor[$key]=$arr;
-            $bmonitor_new[]= array_merge($bmomitor_os, $bmonitor[$key]);
+            $bmomitor_os = ['os_name' => $type];
+            $bmonitor[$key] = $arr;
+            $bmonitor_new[] = array_merge($bmomitor_os, $bmonitor[$key]);
         }
 
         $myCollectionObj = collect($bmonitor_new);
-        
+
         // 使用 {自訂義分頁的function}
         $collection = $this->pagination($myCollectionObj);
-   
+
         // return response()->json($collection,200 );
 
         if (empty($collection)) {
@@ -140,11 +142,10 @@ class BmonitorController extends Controller
             return response()->json($response, 200);
         }
     }
-    public function __construct(int $timeout = 1) 
+    public function __construct(int $timeout = 1)
     {
-        
-        $this->timeout= $timeout;
-       
+
+        $this->timeout = $timeout;
     }
 
     //偵測遠端是否開啟snmp api
@@ -160,7 +161,7 @@ class BmonitorController extends Controller
             'version' => 2,
             'community' => 'public',
         ]);
-        
+
         # Get a specific OID value as a string...
         $result = $snmp->getValue('1.3.6.1.2.1.1.5.0');
         $response  = [
@@ -168,8 +169,20 @@ class BmonitorController extends Controller
             'status' => 'OK',
             'message' => $result,
         ];
-        
+
         return response()->json($response, 200);
+    }
+    //偵測ip狀態 (使用ping)
+    public function getPING(Request $request)
+    {
+
+        $ip = $request->input('ip');
+        exec("ping -n 3 -w 4 $ip", $output, $status);
+        if ($status === 0) {
+            echo "ping 成功";
+        } else {
+            echo "ping 失敗";
+        }
     }
     /**
      * Store a newly created resource in storage.
@@ -181,28 +194,28 @@ class BmonitorController extends Controller
     public function store(Request $request)
     {
         // ip為必填欄位(驗證)
-        $rules=[
+        $rules = [
             'ip' => 'required',
         ];
-        $messages=[
-        'ip.required' => 'ip為必填欄位，請重新操作',
+        $messages = [
+            'ip.required' => 'ip為必填欄位，請重新操作',
         ];
-        $validator=Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            $messages=$validator->messages();
-            $errors=$messages->all();
-            $response =[
+            $messages = $validator->messages();
+            $errors = $messages->all();
+            $response = [
                 'success' => false,
                 'data' => "Error",
                 'message' => $errors[0]
             ];
             return response()->json($response, 202);
         }
-        
-        
+
+
         //檢查IP是否重複
         $schedule = Bmonitor::where('ip', '=', strval($request->ip))->first();
-        
+
         // 若無重複，則開始新增動作
         if (!$schedule) {
             $bmonitor = Bmonitor::create($request->all());
@@ -245,18 +258,18 @@ class BmonitorController extends Controller
             // $bmonitor->note = strval($request->note);
             // $bmonitor->save();
             $response = [
-            'success' => true,
-            'data' => $bmonitor,
-            'message' => '資料新增成功'
-        ];
+                'success' => true,
+                'data' => $bmonitor,
+                'message' => '資料新增成功'
+            ];
             return response()->json($response, 200);
         } else {
             //新增ip重複時的response
             $response = [
-            'success' => false,
-            'message' => '輸入的IP已存在，請重新輸入!',
-            "isIpAvailable" => "no"
-        ];
+                'success' => false,
+                'message' => '輸入的IP已存在，請重新輸入!',
+                "isIpAvailable" => "no"
+            ];
             return response()->json($response, 202);
         }
     }
@@ -271,41 +284,41 @@ class BmonitorController extends Controller
     public function show(Bmonitor $ip)
     {
         $bmonitor = Bmonitor::where("is_delete", '=', "1")->find($ip)->toArray();
-        
-        $bmonitor_new=[];
 
-        foreach ($bmonitor as $key=>$arr) {
-            if ($arr["os"]=="l") {
-                $type="Linux";
+        $bmonitor_new = [];
+
+        foreach ($bmonitor as $key => $arr) {
+            if ($arr["os"] == "l") {
+                $type = "Linux";
             }
-            if ($arr["os"]=="w") {
-                $type="Windows";
+            if ($arr["os"] == "w") {
+                $type = "Windows";
             }
 
-            if ($arr['v_value']>=$arr['v_threshold']) {
+            if ($arr['v_value'] >= $arr['v_threshold']) {
                 $v_isOver = true;
             } else {
-                $v_isOver= false;
+                $v_isOver = false;
             }
-            if ($arr['w_value']>=$arr['w_threshold']) {
-                $w_isOver= true;
+            if ($arr['w_value'] >= $arr['w_threshold']) {
+                $w_isOver = true;
             } else {
-                $w_isOver=false;
+                $w_isOver = false;
             }
-            if ($arr['y_value']>=$arr['y_threshold']) {
-                $y_isOver= true;
+            if ($arr['y_value'] >= $arr['y_threshold']) {
+                $y_isOver = true;
             } else {
-                $y_isOver=false;
+                $y_isOver = false;
             }
-                
-            $bmomitor_os=['os_name'=>$type];
+
+            $bmomitor_os = ['os_name' => $type];
             $bmomitor_isOver = [
-                "v_isOver"=>$v_isOver,
-                "w_isOver"=>$w_isOver,
-                "y_isOver"=>$y_isOver,
+                "v_isOver" => $v_isOver,
+                "w_isOver" => $w_isOver,
+                "y_isOver" => $y_isOver,
             ];
-            $bmonitor[$key]=$arr;
-            $bmonitor_new[]= array_merge($bmomitor_os, $bmonitor[$key], $bmomitor_isOver);
+            $bmonitor[$key] = $arr;
+            $bmonitor_new[] = array_merge($bmomitor_os, $bmonitor[$key], $bmomitor_isOver);
         }
         if (empty($bmonitor)) {
             $response = [
@@ -315,7 +328,7 @@ class BmonitorController extends Controller
             ];
             return response()->json($response, 200);
         }
-        
+
 
         if ($bmonitor) {
             $response = [
@@ -410,18 +423,18 @@ class BmonitorController extends Controller
     {
         $bmonitor = Bmonitor::where("is_delete", '=', "0")->get()->toArray();
 
-        $bmonitor_new=[];
-        foreach ($bmonitor as $key=>$arr) {
-            if ($arr["os"]=="l") {
-                $type="Linux";
+        $bmonitor_new = [];
+        foreach ($bmonitor as $key => $arr) {
+            if ($arr["os"] == "l") {
+                $type = "Linux";
             }
-            if ($arr["os"]=="w") {
-                $type="Windows";
+            if ($arr["os"] == "w") {
+                $type = "Windows";
             }
 
-            $bmomitor_os=['os_name'=>$type];
-            $bmonitor[$key]=$arr;
-            $bmonitor_new[]= array_merge($bmomitor_os, $bmonitor[$key]);
+            $bmomitor_os = ['os_name' => $type];
+            $bmonitor[$key] = $arr;
+            $bmonitor_new[] = array_merge($bmomitor_os, $bmonitor[$key]);
         }
 
         if (empty($bmonitor_new)) {
@@ -445,9 +458,9 @@ class BmonitorController extends Controller
     public function search($keyword)
     {
         $result = Bmonitor::where("is_delete", '=', "1")->where('ip', '=', $keyword)->get();
-    
+
         if ($result->isEmpty()) {
-            $result =  ["message"=>"查無資料，請重新輸入!"];
+            $result =  ["message" => "查無資料，請重新輸入!"];
             return response()->json($result, 202);
         } else {
             return response()->json($result, 200);
@@ -458,7 +471,7 @@ class BmonitorController extends Controller
     {
         $result = Bmonitor::where("is_delete", '=', "0")->where("ip", '=', $keyword)->get();
         if ($result->isEmpty()) {
-            $result =  ["message"=>"查無資料，請重新輸入!"];
+            $result =  ["message" => "查無資料，請重新輸入!"];
             return response()->json($result, 202);
         } else {
             return response()->json($result, 200);
@@ -471,7 +484,7 @@ class BmonitorController extends Controller
 
     //     $result =   Bmonitor::where('ip', 'like', '%'.$keyword.'%')
     //     ->orWhere('hostname', 'like', '%'.$keyword.'%')->get();
-    
+
     //     if ($result->isEmpty()) {
     //         $result =  ["message"=>"查無資料，請重新輸入!"];
     //         return response()->json($result, 202);
