@@ -71,6 +71,8 @@ class Handler extends ExceptionHandler
                 'success' => false,
                 'status' =>"FAIL",
                 'message' => '未經允許登入，請重新操作'], 202);
+
+                
         });
         
 

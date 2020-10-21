@@ -19,11 +19,10 @@ class UserController extends Controller
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
                     'message' => ['These credentials do not match our records.']
-                ], 404);
+                ], 202);
             }
         
              $token = $user->createToken('my-app-token')->plainTextToken;
-        
             $response = [
                 'success'=>true,
                 'user' => $user,
@@ -37,7 +36,11 @@ class UserController extends Controller
     {
         $user = $request->user();
 
+        //刪除全部的token
         $user->tokens()->delete();
+
+        // 只刪除指定的token
+        // $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
 
 
         $response = [

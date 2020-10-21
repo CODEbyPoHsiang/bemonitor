@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
-
+use Laravel\Sanctum\HasApiTokens; //追加
+use Illuminate\Support\Facades\Auth;
 
 /**** 自定義分頁 (需要套件)****/
 use Illuminate\Support\Collection;
@@ -29,6 +30,7 @@ class BmonitorController extends Controller
     /**** 監控機器清單列表 api ****/
     public function index()
     {
+       
         // $bmonitor = Bmonitor::all()->toArray();
         // $bmonitor = Bmonitor::where("is_delete",'=',"1")->orderBy('create_time', 'desc')->get()->toArray();
         $bmonitor = Bmonitor::where("is_delete", '=', "1")->get()->toArray();
@@ -239,6 +241,7 @@ class BmonitorController extends Controller
     /**** 顯示單一筆資料 api ****/
     public function show(Bmonitor $ip)
     {
+       
         $bmonitor = Bmonitor::where("is_delete", '=', "1")->find($ip)->toArray();
 
         $bmonitor_new = [];
