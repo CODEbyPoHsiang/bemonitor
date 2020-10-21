@@ -83,7 +83,7 @@ Route::get("monitor_list_page", 'LmonitorController@paginate');
 // //搜尋 監控記錄 清單 (3個變數)
 // Route::get("monitor_search/{ip}/{from}/{to}", 'LmonitorController@search');
 //搜尋 監控記錄 清單 (1個變數)
-Route::get("monitor_search/{ip}", 'LmonitorController@search_data');
+// Route::get("monitor_search/{ip}", 'LmonitorController@search_data');
 /********************************************************************************/
 /**** LeventController (table：l_event) ****/
 // 顯示 事件紀錄清單
@@ -98,6 +98,8 @@ Route::post("telegram_send", 'TelegramSendController@alert_message');
     });
 // Route::post('logout', 'Auth\Api\LoginController@logout');
 
+Route::get("monitor_search", 'LmonitorController@search_data_2');
+Route::get("monitor_search/{ip}", 'LmonitorController@search_data');
 
 /********************************************************************************/
 
