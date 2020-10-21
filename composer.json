@@ -9,11 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "codebypohsiang/snmptest": "^1.1",
+        "codebypohsiang/apenbhdsnmp": "^1.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "laravel/framework": "^8.9",
+        "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "^3.0",
         "spatie/laravel-query-builder": "^3.2"
     },
     "require-dev": {

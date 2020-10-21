@@ -1,8 +1,8 @@
 #!/bin/bash
-OUTPUT=/dev/shm/tcpConnState_rank.txt
-JSON=/dev/shm/tcpConnState_rank.json
+OUTPUT=/resources/assets/tcpConnState_rank.txt
+JSON=/resources/assets/tcpConnState_rank.json
 
-cd /dev/shm/tcp
+cd /resources/assets/tcp
 if [ -z $1 ] ; then
     sed -e /listen/d -e /127.0.0.1/d *tcpConnState | cut -d. -f7-10 | sort | uniq -c | sort -rn | awk '{print $2" "$1}' > $OUTPUT
     truncate -s -1 $OUTPUT # 去除最後一行的 enter

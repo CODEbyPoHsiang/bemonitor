@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\QueryException;
 use FreeDSx\Snmp\Exception\ConnectionException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 class Handler extends ExceptionHandler
 {
     
@@ -49,7 +50,7 @@ class Handler extends ExceptionHandler
             return response()->json(  $response = [
                 'success' => false,
                 'data' => [],
-                'message' => '輸入不得為空白，請重新操作!'], 202);
+                'message' => '資料不存在，請重新操作!'], 202);
         });
         // 資料庫錯誤報錯
         $this->renderable(function (QueryException $e, $request) {
@@ -63,6 +64,13 @@ class Handler extends ExceptionHandler
                 'success' => false,
                 'status' =>"FAIL",
                 'message' => '您所輸入的IP可能尚未開啟SNMP服務，請確認後再操作'], 202);
+        });
+        // token 未帶報錯誤
+        $this->renderable(function (RouteNotFoundException $e, $request) {
+            return response()->json(  $response = [
+                'success' => false,
+                'status' =>"FAIL",
+                'message' => '未經允許登入，請重新操作'], 202);
         });
         
 

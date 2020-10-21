@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "427ac23efdc9442738aa7a641458ea1d",
+    "content-hash": "c80e1997c1a1c1a18bf94a99fb30f884",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -111,17 +111,17 @@
             "time": "2020-08-18T23:57:15+00:00"
         },
         {
-            "name": "codebypohsiang/snmptest",
-            "version": "v1.1.0",
+            "name": "codebypohsiang/apenbhdsnmp",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/CODEbyPoHsiang/snmptest.git",
-                "reference": "8fb65fa298100022d34be3c53f64ddf1ba53c359"
+                "url": "https://github.com/CODEbyPoHsiang/apenbhdsnmp.git",
+                "reference": "3a36aacd415368f8a670c1e5777a7e94ee24ab65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CODEbyPoHsiang/snmptest/zipball/8fb65fa298100022d34be3c53f64ddf1ba53c359",
-                "reference": "8fb65fa298100022d34be3c53f64ddf1ba53c359",
+                "url": "https://api.github.com/repos/CODEbyPoHsiang/apenbhdsnmp/zipball/3a36aacd415368f8a670c1e5777a7e94ee24ab65",
+                "reference": "3a36aacd415368f8a670c1e5777a7e94ee24ab65",
                 "shasum": ""
             },
             "require": {
@@ -151,8 +151,8 @@
                     "email": "0939cool@gmail.com"
                 }
             ],
-            "description": "snmptest",
-            "time": "2020-10-19T02:55:52+00:00"
+            "description": "apenbhdsnmptest",
+            "time": "2020-10-19T01:42:22+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -923,6 +923,66 @@
             "time": "2020-10-13T14:20:53+00:00"
         },
         {
+            "name": "laravel/sanctum",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sanctum.git",
+                "reference": "a38ffd5f419dbaaefc4cb81c1bdde12a02c4854e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/a38ffd5f419dbaaefc4cb81c1bdde12a02c4854e",
+                "reference": "a38ffd5f419dbaaefc4cb81c1bdde12a02c4854e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/contracts": "^6.9|^7.0|^8.0",
+                "illuminate/database": "^6.9|^7.0|^8.0",
+                "illuminate/support": "^6.9|^7.0|^8.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Sanctum\\SanctumServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Sanctum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Sanctum provides a featherweight authentication system for SPAs and simple APIs.",
+            "keywords": [
+                "auth",
+                "laravel",
+                "sanctum"
+            ],
+            "time": "2020-09-01T13:48:09+00:00"
+        },
+        {
             "name": "laravel/tinker",
             "version": "v2.4.2",
             "source": {
@@ -985,6 +1045,60 @@
                 "psysh"
             ],
             "time": "2020-08-11T19:28:08+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "ff6af4f0bc5a5bfe73352cdc03dbfffc4ace92d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/ff6af4f0bc5a5bfe73352cdc03dbfffc4ace92d8",
+                "reference": "ff6af4f0bc5a5bfe73352cdc03dbfffc4ace92d8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^8.0",
+                "illuminate/filesystem": "^8.0",
+                "illuminate/support": "^8.0",
+                "php": "^7.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/",
+                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "time": "2020-09-11T15:34:08+00:00"
         },
         {
             "name": "league/commonmark",
